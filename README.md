@@ -150,7 +150,7 @@ Please enter a type: [required] [tab-completion] [header]
 자세한 수정 및 설정방법은 공식 문서를 확인해보자.
 
 [Commitlint 공식 문서](https://github.com/conventional-changelog/commitlint/blob/master/docs/reference-rules.md)
-
+ 
 # 공식 문서 링크
 #### [git hooks 한글 공식 문서](https://git-scm.com/book/ko/v2/Git%EB%A7%9E%EC%B6%A4-Git-Hooks)
 #### [husky 공식 레퍼지토리](https://github.com/typicode/husky)
