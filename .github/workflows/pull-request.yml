@@ -28,11 +28,6 @@ jobs:
         with:
           fetch-depth: 0
           
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          cache: "yarn"
-          
       - run: npm install
       - run: yarn add @commitlint/cli @commitlint/config-conventional
       - uses: wagoid/commitlint-github-action@v4
