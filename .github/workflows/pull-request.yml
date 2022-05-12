@@ -16,8 +16,6 @@ jobs:
       - uses: actions/checkout@v1
       - run: yarn add @commitlint/config-conventional
       - uses: JulienKode/pull-request-name-linter-action@v0.5.0
-        with:
-          configFile: ./commitlint.config.js
   commitlint:
     name: master Push or Merge 확인
     # Only if we are pushing or merging PR to the master
