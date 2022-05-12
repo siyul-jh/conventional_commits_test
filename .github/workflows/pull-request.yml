@@ -41,8 +41,11 @@ jobs:
   commit-check:
     name: check
     needs: [lint-commits, lint-pull-request-name]
-    if: ${{ startsWith(github.event.head_commit.message, 'build:') }}
     runs-on: ubuntu-latest
+    
     steps:
+      - if: ${{ startsWith(github.event.head_commit.message, 'build:') }}
       - run: echo '::build::'
+      - if: ${{ !startsWith(github.event.head_commit.message, 'build:') }}
+      - run: echo '::build false::'
     
