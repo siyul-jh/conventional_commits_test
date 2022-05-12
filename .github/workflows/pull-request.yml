@@ -8,6 +8,7 @@ on:
         - '**'
 jobs:
   lint-pull-request-name:
+    name: PR 확인
     # Only on pull requests
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
@@ -16,6 +17,7 @@ jobs:
       - run: yarn add @commitlint/config-conventional
       - uses: JulienKode/pull-request-name-linter-action@v0.1.2
   lint-commits:
+    name: master Push or Merge 확인
     # Only if we are pushing or merging PR to the master
     if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master') || github.event_name == 'push'
     runs-on: ubuntu-latest
