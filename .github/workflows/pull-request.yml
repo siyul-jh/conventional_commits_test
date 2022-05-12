@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test1
-        run: echo ::set-output name=commit_message::${{ github.event.pull_request.commits }}
+        run: echo ::set-output name=commit_message::${{ github.event.head_commit.message }}
       - name: test2
         run: echo ::set-output name=commit_message::${{ github.event }}
         
