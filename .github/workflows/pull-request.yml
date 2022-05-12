@@ -25,14 +25,11 @@ jobs:
     if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master') || github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
-      - name: Get commit message
-        id: get_commit_message
-        run: |
-          if [[ '${{ github.event_name }}' == 'push' ]]; then
-            echo ::set-output name=commit_message::$(git log --format=%B -n 1 HEAD)
-          elif [[ '${{ github.event_name }}' == 'pull_request' ]]; then
-            echo ::set-output name=commit_message::$(git log --format=%B -n 1 HEAD^2)
-          fi
+      - name: test1
+        run: echo ::set-output name=commit_message::${{ github.event.pull_request.commits }}
+      - name: test2
+        run: echo ::set-output name=commit_message::${{ github.event }}
+        
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
