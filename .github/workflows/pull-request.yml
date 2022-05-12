@@ -25,6 +25,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 30 # Its fine to lint last 30 commits only
-      - run: yarn add @commitlint/config-conventional
-      - uses: wagoid/commitlint-github-action@v1
-      - run: yarn commitlint --edit $1
+      - run: yarn add @commitlint/cli @commitlint/config-conventional
+      - uses: wagoid/commitlint-github-action@v2.0.3
+        with:
+          configFile: ./commitlint.config.js
+      - run: yarn run commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
