@@ -24,12 +24,8 @@ jobs:
 #    # Only if we are pushing or merging PR to the master
     if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master') || github.event_name == 'push'
     runs-on: ubuntu-latest
+    
     steps:
-      - name: test1
-        run: echo ::set-output name=commit_message::${{ github.event.head_commit.message }}
-      - name: test2
-        run: echo ::set-output name=commit_message::${{ github.event }}
-        
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -40,3 +36,10 @@ jobs:
         with:
           configFile: ./commitlint.config.js # optional, default is ./commitlint.config.js
       - run: yarn run commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
+  commit-check:
+    name: check
+    if: ${{ !contains(github.event.head_commit.message, 'build') }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo '::build::'
+    
