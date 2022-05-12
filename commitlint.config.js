@@ -1,6 +1,6 @@
 const rules = [
     {
-        key: "docs",
+        key: "build",
         description: "빌드 시스템 또는 외부 종속성에 영향을 미치는 변경 사항(예: gulp, broccoli, npm)"
     },
     {
