@@ -145,6 +145,7 @@ Please enter a type: [required] [tab-completion] [header]
 자세한 내용은 [Conventional Commits 한글 공식 문서](https://www.conventionalcommits.org/ko/v1.0.0/)에서 확인 할 수 있다.
 
 
+
 규칙을 수정하고 싶다면 `commitlint.config.js` 파일을 수정하여 적용 할 수 있다.\
 자세한 수정 및 설정방법은 공식 문서를 확인해보자.
 
