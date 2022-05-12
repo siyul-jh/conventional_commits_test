@@ -41,9 +41,8 @@ jobs:
   commit-check:
     name: check
     needs: [lint-commits, lint-pull-request-name]
+    if: ${{ always() && contains(github.event.head_commit.message, 'build:') }}
     runs-on: ubuntu-latest
     steps:
-      - if: ${{ startsWith(github.event.head_commit.message, 'build:') }}
         run: echo 'success'
-      - if: ${{ !startsWith(github.event.head_commit.message, 'build:') }}
-        run: echo 'fail'
+    
