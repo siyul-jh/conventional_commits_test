@@ -1,0 +1,1 @@
+pull request시 commit convention을 준수하기 위한 workflow TEXT
