@@ -44,5 +44,4 @@ jobs:
     if: ${{ always() && contains(github.event.head_commit.message, 'build:') }}
     runs-on: ubuntu-latest
     steps:
-        run: echo 'success'
-    
+       - run: echo '::build::'
