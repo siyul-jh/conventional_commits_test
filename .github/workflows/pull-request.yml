@@ -8,20 +8,21 @@ on:
         - master
         - main
 jobs:
-#   lint-pull-request-name:
-#     name: PR 확인 확인
-#     # Only on pull requests
-#     if: github.event_name == 'pull_request'
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: actions/checkout@v1
-#       - run: yarn add @commitlint/config-conventional
-#       - uses: JulienKode/pull-request-name-linter-action@v0.5.0
-      
+  lint-pull-request-name:
+    name: PR 확인 확인
+    # Only on pull requests
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - run: yarn add @commitlint/config-conventional
+      - uses: JulienKode/pull-request-name-linter-action@v0.5.0
+        with:
+          configuration-path: ./commitlint.config.js # optional, default is ./commitlint.config.js
   lint-commits:
     name: push, marge 확인
-    # Only if we are pushing or merging PR to the master
-    # if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master') || github.event_name == 'push'
+#    # Only if we are pushing or merging PR to the master
+    if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master') || github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -32,5 +33,5 @@ jobs:
       - run: yarn add @commitlint/cli @commitlint/config-conventional
       - uses: wagoid/commitlint-github-action@v4
         with:
-          configFile: ./commitlint.config.js
+          configFile: ./commitlint.config.js # optional, default is ./commitlint.config.js
       - run: yarn run commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
