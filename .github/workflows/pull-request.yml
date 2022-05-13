@@ -1,47 +1,50 @@
-name: Pull Request Commitlint
-
+name: Github Action
 on:
   pull_request:
-      types: ['opened', 'edited', 'reopened', 'synchronize']
+    types: ['opened', 'edited', 'reopened', 'synchronize']
   push:
-      branches:
-        - master
-        - main
-      tags:
-        - v*
+    branches:
+      - master
+      - main
+    tags:
+      - v*
 jobs:
   lint-pull-request-name:
-    name: PR 확인 확인
+    name: Pull Request Check
+    runs-on: ubuntu-latest
     # Only on pull requests
     if: github.event_name == 'pull_request'
-    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
       - run: yarn add @commitlint/config-conventional
       - uses: JulienKode/pull-request-name-linter-action@v0.5.0
         with:
           configuration-path: ./commitlint.config.js # optional, default is ./commitlint.config.js
+          
   lint-commits:
-    name: push, marge 확인
-#    # Only if we are pushing or merging PR to the master
-    if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master') || github.event_name == 'push'
+    name: Push Check
     runs-on: ubuntu-latest
-    
+    # Only if we are pushing or merging PR to the master(main)
+    if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master') || github.event_name == 'push'
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          
-      - uses: actions/setup-node@v2.1.0
-      - run: yarn add @commitlint/cli @commitlint/config-conventional
       - uses: wagoid/commitlint-github-action@v4
         with:
           configFile: ./commitlint.config.js # optional, default is ./commitlint.config.js
-      - run: yarn run commitlint --from HEAD~${{ github.event.pull_request.commits }} --to HEAD
-  commit-check:
-    name: check
-    needs: [lint-commits, lint-pull-request-name]
-    if: ${{ always() && contains(github.event.head_commit.message, 'build:') }}
+      
+  lint-build:
+    name: Build
     runs-on: ubuntu-latest
+    needs: [lint-commits, lint-pull-request-name]
+
+    # `always()` function which will tell your job to always run.
+    # `contains(needs.*.result, 'success')` will be true if at least one of the jobs succeeded.
+    # `!(contains(needs.*.result, 'failure'))` is false if any job failed
+    # So if all your jobs are skipped it will be false.
+    # Only on git commit message rule corresponds to build type
+    if: ${{ always() && contains(needs.*.result, 'success') && !(contains(needs.*.result, 'failure')) && contains(github.event.head_commit.message, 'build:') }}
     steps:
-       - run: echo '::build::'
+      - run : echo succeed
+
