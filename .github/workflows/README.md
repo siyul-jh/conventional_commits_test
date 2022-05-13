@@ -2,6 +2,8 @@
 
 ## Pull request를 위한 lint 설정
 
+pull request, push, build 체크
+
 ```yml
 name: Github Action
 on:
