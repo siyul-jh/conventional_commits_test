@@ -6,7 +6,7 @@ jobs:
     lint-pull-request-name:
         name: Pull Request Check
         runs-on: ubuntu-latest
-        if: (github.event_name == 'pull_request' && github.base_ref == 'refs/heads/master')
+        if: github.event_name == 'pull_request'
         steps:
             - uses: actions/checkout@v3
               with:
@@ -14,4 +14,3 @@ jobs:
             - uses: wagoid/commitlint-github-action@v4
               with:
                   configFile: ./commitlint.config.js # optional, default is ./commitlint.config.js
-
